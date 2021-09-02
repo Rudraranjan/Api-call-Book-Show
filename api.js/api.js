@@ -8,12 +8,28 @@ const searchButton = () => {
     const inputValue = inputField.value;
 
     fetch(`https://openlibrary.org/search.json?q=${inputValue}`)
-    .then (res => res.json())
-    .then (data => displayBooks(data.docs))
+    .then (res => res.json())   
+    .then (data => displayBooks(data.docs, data))
 }
 
-const displayBooks = (items) => {
-    console.log(items);
+
+
+const displayBooks = (items, total) => {
+    console.log(items, total);
+
+    // total use for showing search result details/amount
+    
+    const totalSearchDetails = document.getElementById('display-massage');
+    totalSearchDetails.textContent = '';
+    const divNew = document.createElement('div');
+    divNew.innerHTML = `
+        <h4>Total Search Result :${total.num_found}</h4>
+        <h4>Total Result Show Now :${total.docs.length}</h4>            
+    `
+    totalSearchDetails.appendChild(divNew);
+
+    // items details push by here
+
     const itemPush =document.getElementById('items-push'); 
     itemPush.textContent ='';    
     
@@ -22,7 +38,7 @@ const displayBooks = (items) => {
         displayMassage.style.display = 'block';
     }
     else{
-        items.forEach(item => {        
+        items.forEach(item => {                
             const div = document.createElement('div')
             div.classList.add('col')
             const url =`https://covers.openlibrary.org/b/id/${item.cover_i}-L.jpg`
