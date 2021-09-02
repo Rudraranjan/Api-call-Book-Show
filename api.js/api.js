@@ -6,6 +6,7 @@ displayMassage.style.display = 'none';
 const searchButton = () => {
     const inputField = document.getElementById('input-field');
     const inputValue = inputField.value;
+    inputField.value = '';
 
     fetch(`https://openlibrary.org/search.json?q=${inputValue}`)
     .then (res => res.json())   
